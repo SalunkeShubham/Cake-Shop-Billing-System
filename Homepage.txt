@@ -1,0 +1,208 @@
+package cakeshop;
+
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
+			public class OrderPage {
+	public  String name;
+	public   double cakePrice;
+	public  int Cake_id,option;
+	public double Quantity;
+	double gross;
+//Parameterized Constructor for adding values in Menu ArrayList
+	public OrderPage(int cake_id,String name, double cakePrice) {
+	this.name = name;
+	this.cakePrice = cakePrice;
+	this.Cake_id =cake_id;
+}
+	//Parameterized Constructor for Taking order in Vector List from user 
+	public OrderPage(int cake_id, double quantity,String name, double cakePrice,double gross) {
+		super();
+		this.name = name;
+		this.cakePrice = cakePrice;
+		this.Cake_id = cake_id;
+		this.Quantity=quantity;
+		this.gross=gross;
+	}
+	public OrderPage() {
+		super();
+		this.name = name;
+		this.cakePrice = cakePrice;
+	}	
+			Scanner cs=new Scanner(System.in);
+			
+	public List deleteFromList(Vector<OrderPage>order) {
+				System.out.println("\t\tWhich Cake you want to remove?");
+				int id=cs.nextInt();
+				order.remove(id-1);
+				return order;
+			}
+	public List addInList(Vector<OrderPage>order,List<OrderPage>Menu,int flavor_count) {
+				System.out.println("\t\tSelect Cake and Quantity");
+				int flavor=cs.nextInt();
+			double	quantity=cs.nextDouble();
+				String name=Menu.get(flavor-1).name;
+				double cakePrice=Menu.get(flavor-1).cakePrice;
+				double gross=cakePrice*quantity;
+				order.add(new OrderPage(flavor_count+1,quantity,name,cakePrice,gross));
+				return order;
+			}
+	public List updateInList(Vector<OrderPage>order) {
+		System.out.println("\t\tEnter Cake no And Quantity to update");
+		int flavor=0;double quantity=0;
+	try {
+			flavor=cs.nextInt();
+			quantity=cs.nextDouble();
+		}
+	catch(InputMismatchException e) {
+				System.out.println(e);
+			}
+			String name=order.get(flavor-1).name;
+			double Cake_price=order.get(flavor-1).cakePrice;
+			double gross=order.get(flavor-1).cakePrice*quantity;
+				order.set(flavor-1,new OrderPage(flavor-1,quantity,name,Cake_price,gross));
+				return order;
+						}
+		public void show(int flavorCount,Vector<OrderPage>order) {
+			int count=1;
+			System.out.println("\t\t-------------: Your Order :--------------");
+			for(int i=0;i<flavorCount;i++) {
+				System.out.print("\n\t\t "+count+"  "+order.get(i).name);
+				String str=order.get(i).name;
+				for(int j=0;j<23-str.length();j++) {
+					System.out.print(" ");
+				}
+				System.out.print(order.get(i).cakePrice);
+	
+				System.out.println("\t"+order.get(i).Quantity);
+						count++;
+			}
+				System.out.println("\t\t------------------------------------\n");
+			
+		}
+						
+	public static void main(String[] args) throws IOException {
+	
+		Purchase  purchase=new Purchase();
+		int option,flavor=0,flavor_count =0;
+		double quantity=0;
+		Scanner sc=new Scanner(System.in);
+		OrderPage obj=new OrderPage();//OrderPage class Object created 
+		ArrayList<OrderPage>Menu=new ArrayList<OrderPage>();//Arraylist for Menu
+		Vector<OrderPage>order=new Vector<OrderPage>();//Vector List for taking order from user
+		
+		System.out.println("\n\t\t--------------:  Welcome To Delicious Cake Shop  :--------------\n");
+		Menu.add(new OrderPage(1,"Belgian Chocolate", 350));
+		Menu.add(new OrderPage(2,"Strawberry", 400));
+		Menu.add(new OrderPage(3,"Chocolate", 390));
+		Menu.add(new OrderPage(4,"Blackforest", 380));
+		Menu.add(new OrderPage(5,"Red Velvet", 350));
+		Menu.add(new OrderPage(6,"Carrot Cake",440));
+		Menu.add(new OrderPage(7,"Butter Pecan",640));
+		Menu.add(new OrderPage(8,"Caramel Apple",310));
+		Menu.add(new OrderPage(9,"Vanilla",400));
+		Menu.add(new OrderPage(10,"Boston Cream",390));
+		Menu.add(new OrderPage(11,"Lemon Raspberry",350));
+		Menu.add(new OrderPage(12,"Tres Leches",420));
+		Menu.add(new OrderPage(13,"Classic Yellow",300));
+		Menu.add(new OrderPage(14,"Cinnamon Sugar",520));
+		Menu.add(new OrderPage(15,"Chocolate Raspberry",450));
+		System.out.println("\t\tsr.no\t\tFlavour Name   \t\t   Price(per Kg)");
+			//Menu.set(1,new OrderPage(2,"Strawberry", 200));
+	
+		for(OrderPage orderPage : Menu) {
+			System.out.print("\t\t  "+orderPage.Cake_id);
+			System.out.print("\t\t"+orderPage.name);
+					String str=orderPage.name;
+				for(int i=0;i<20-str.length();i++) {
+					System.out.print(" ");
+				}
+			System.out.println("\t\t"+orderPage.cakePrice);
+		}
+		System.out.println("\t\t--------------------------------------------------------------\n");
+		System.out.println("\nHow much flavor You Want?");
+	try {
+		 flavor_count=sc.nextInt();
+		}
+	catch(InputMismatchException e) {
+				System.out.println("Enter Valid Count of Flavors");
+				System.exit(0);
+			}
+								for(int i=0;i<flavor_count;i++) {
+		System.out.println("select flavor and Quantity");
+		try {
+			 flavor=sc.nextInt();
+						if (flavor>Menu.size()||flavor<=0) {
+								System.out.println("Enter Valid Flavor");
+									System.exit(0);
+						}
+			 quantity=sc.nextDouble();
+				if (quantity<=0) {
+					System.out.println("Enter Valid Quantity");
+					System.exit(0);
+				}
+		}
+			catch(InputMismatchException e) {
+				System.out.println("Enter a valid Input");
+				System.exit(0);
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+						double gross=Menu.get(flavor-1).cakePrice*quantity;
+							int cake_id=Menu.get(flavor-1).Cake_id;
+								String CakeName=Menu.get(flavor-1).name;
+										double CakePrice=Menu.get(flavor-1).cakePrice;
+					//Adding Values in Order 
+			order.add(new OrderPage(cake_id,quantity,CakeName, CakePrice,gross));
+			
+		}	
+							obj.show(flavor_count,order);
+							
+			
+		do {
+			System.out.println("\t\t1.Proceed to Bill \t 2.Delete Item from Order\n\t\t3.Add Item in order\t 4. Update Quantity");
+									 option=sc.nextInt();
+			if(option==1) {
+							purchase.orderShow(order,flavor_count);
+							break;
+				}
+							
+				else if(option==2) {
+						--flavor_count;
+						obj.deleteFromList(order);
+						obj.show(flavor_count, order);
+					
+				}
+				else if(option==3) {
+				flavor_count++;
+					obj.addInList(order,Menu,flavor_count);
+					obj.show(flavor_count, order);
+					
+				}
+				else if(option==4) {
+					obj.updateInList(order);
+						obj.show(flavor_count, order);
+				}
+				else {
+					System.out.println("Invalid Choice");
+					System.exit(0);
+				}
+		}while(option<=4 && option>0);
+						
+						sc.close();	
+						System.out.println("Invalid Choice");
+	}
+	
+	}	
+	
+
+		
+
+
+

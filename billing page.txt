@@ -1,0 +1,69 @@
+package cakeshop;
+
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
+import cakeshop.OrderPage;
+public class Purchase extends OrderPage{
+	double tot_quantity=0;
+	long PhoneNo;
+	double Grand_total=0;
+	String CustomerName,address;
+			LocalDateTime date= LocalDateTime.now();
+			DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS");
+			String dateTime=date.format(formatter);
+			Scanner sc=new Scanner(System.in);
+		void orderShow(Vector<OrderPage> order,int flavor_count) {
+	try {
+			System.out.println("Enter your name");
+			 CustomerName=sc.nextLine();
+			System.out.println("Enter Address");
+			 address=sc.nextLine();
+			System.out.println("Enter Mobile No ");
+			 PhoneNo=sc.nextLong();
+			}
+			catch(Exception e) {
+				System.out.println("Enter valid Information "+e);
+			}
+			System.out.println("----------------------DELICIOUS CAKE SHOP----------------------");
+			System.out.println("  Customer Name : "+CustomerName+"\t Address : "+address+"\n Phone No : "+PhoneNo+"\t\t"+dateTime);
+			System.out.println("-----------------------------------------------------------------");
+			System.out.println("   Cake Name\t " +"\t    Cake Price\t "+"     Quantity\t    Gross Price");
+			for (int i=0;i<flavor_count;i++){
+				tot_quantity=tot_quantity+order.get(i).Quantity;
+				Grand_total=Grand_total+order.get(i).gross;
+				System.out.print("  "+order.get(i).name+"");
+				String str=order.get(i).name;
+				for(int j=0;j<15-str.length();j++) {
+					System.out.print(" ");
+				}
+				System.out.print("\t\t"+order.get(i).cakePrice+"\t");
+				System.out.print("\t"+order.get(i).Quantity+"\t");
+				System.out.println("\t"+order.get(i).gross+"\t");
+				}
+		System.out.println("---------------------------------------------------------------------");
+		System.out.println("Total purchase :"+flavor_count+" \t"+"\tTotal Quantity :"+tot_quantity+"  "+"Grand Total :"+Grand_total);
+		System.out.println("\t\t Thank You !! Visit Again !!");
+		System.exit(0);
+		}
+			
+
+	
+	}
+
+
+	
+
+	
+	
+			
+
+		
+	
+
+
